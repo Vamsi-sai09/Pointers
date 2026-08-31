@@ -1,0 +1,116 @@
+Problem Statement 1: Dynamic Student Records
+
+Create a program to manage student records dynamically. The program should:
+
+Allow the user to enter details of n students.
+Allocate memory dynamically using pointers.
+Use a double pointer to create and manage the dynamic array of student records.
+Display all student information and free the allocated memory before exiting.
+
+Solution
+in CPP:
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Student {
+    int rollNo;
+    string name;
+    float marks;
+};
+
+int main() {
+    int n;
+
+    cout << "Enter number of students: ";
+    cin >> n;
+
+    // Double pointer for dynamic allocation
+    Student **students = new Student*[n];
+
+    // Input student details
+    for (int i = 0; i < n; i++) {
+        students[i] = new Student;
+
+        cout << "\nEnter details of Student " << i + 1 << ":\n";
+
+        cout << "Roll Number: ";
+        cin >> students[i]->rollNo;
+
+        cout << "Name: ";
+        cin >> students[i]->name;
+
+        cout << "Marks: ";
+        cin >> students[i]->marks;
+    }
+
+    // Display student details
+    cout << "\n--- Student Records ---\n";
+    for (int i = 0; i < n; i++) {
+        cout << "\nStudent " << i + 1 << endl;
+        cout << "Roll Number: " << students[i]->rollNo << endl;
+        cout << "Name: " << students[i]->name << endl;
+        cout << "Marks: " << students[i]->marks << endl;
+    }
+
+    // Free memory
+    for (int i = 0; i < n; i++) {
+        delete students[i];
+    }
+    delete[] students;
+
+    return 0;
+}
+
+in c:
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student {
+    int rollNo;
+    char name[50];
+    float marks;
+};
+
+int main() {
+    int n, i;
+
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    // Double pointer for dynamic array of student records
+    struct Student **students;
+
+    students = (struct Student **)malloc(n * sizeof(struct Student *));
+
+    for (i = 0; i < n; i++) {
+        students[i] = (struct Student *)malloc(sizeof(struct Student));
+
+        printf("\nEnter details of Student %d\n", i + 1);
+
+        printf("Roll No: ");
+        scanf("%d", &students[i]->rollNo);
+
+        printf("Name: ");
+        scanf("%s", students[i]->name);
+
+        printf("Marks: ");
+        scanf("%f", &students[i]->marks);
+    }
+
+    printf("\n--- Student Records ---\n");
+    for (i = 0; i < n; i++) {
+        printf("\nStudent %d\n", i + 1);
+        printf("Roll No: %d\n", students[i]->rollNo);
+        printf("Name: %s\n", students[i]->name);
+        printf("Marks: %.2f\n", students[i]->marks);
+    }
+
+    // Free allocated memory
+    for (i = 0; i < n; i++) {
+        free(students[i]);
+    }
+    free(students);
+
+    return 0;
+}
